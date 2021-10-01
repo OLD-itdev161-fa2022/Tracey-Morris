@@ -1,6 +1,7 @@
 import express from 'express';
 import connectDatabase from './config/db';
-import { check, validationResult } from 'express-validator'
+import { check, validationResult } from 'express-validator';
+import cors from 'cors';
 
 //intialize express applicaion
 const app = express();
@@ -10,6 +11,11 @@ connectDatabase();
 
 // configure Middleware
 app.use(express.json({extended: false }));
+app.use(
+    cors({
+        origin: 'http://localhost:3000'
+    })
+);
 
 //API endpoints
 /** 
@@ -35,7 +41,7 @@ app.post
 (req, res) => {
     const error =validationResult(req);
     if (!error.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+      return res.status(422).json({ error: error.array() });
     } else {
         return res.send(req.body);
     }
@@ -45,4 +51,5 @@ app.post
 );
 
 //Connection listener
-app.listen(3000, () => console.log('Express server running on part 3000'));
+const port = 5000;
+app.listen(port, () => console.log(`Express server running on port ${port}`));
