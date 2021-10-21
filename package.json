@@ -1,29 +1,35 @@
 {
-  "name": "itdev161-assignment-v2",
+  "name": "tracey-morris",
   "version": "1.0.0",
-  "description": "itdev161-assignmnets-v2",
+  "description": "//Updated",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node -r esm server.js",
-    "server": "nodemon -r esm server.js"
+    "server": "nodemon -r esm server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/itdev161-fa2022/Tracey-Morris.git"
+    "url" : "https://github.com/itdev161-fa2022/Tracey-Morris/issues"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/itdev161-fa2022/Tracey-Morris/issues"
+    "homepage": "https://github.com/itdev161-fa2022/Tracey-Morris#readme"
+
   },
-  "homepage": "https://github.com/itdev161-fa2022/Tracey-Morris#readme",
   "dependencies": {
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
+    "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.5"
   },
   "devDependencies": {
