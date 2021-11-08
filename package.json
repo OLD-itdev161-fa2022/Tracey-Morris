@@ -12,13 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url" : "https://github.com/itdev161-fa2022/Tracey-Morris/issues"
+    "url": "https://github.com/itdev161-fa2022/Tracey-Morris/issues"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "homepage": "https://github.com/itdev161-fa2022/Tracey-Morris#readme"
-
   },
   "dependencies": {
     "@types/react": "^17.0.24",
@@ -30,7 +29,8 @@
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.5"
+    "mongoose": "^6.0.5",
+    "react-router-dom": "^6.0.1"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",
