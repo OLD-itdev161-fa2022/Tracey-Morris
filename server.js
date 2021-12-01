@@ -8,7 +8,7 @@ import config from 'config';
 import User from '.models/User';
 import Post from '.models/Post';
 import auth from './middleware/auth';
-import path from 'path';
+
 
 // Initialize express application
 const app = express();
