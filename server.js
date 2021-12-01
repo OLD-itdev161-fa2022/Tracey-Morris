@@ -20,7 +20,7 @@ app.post('/api/users',
 
 
     ],
-    // Callback method
+  
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -37,7 +37,7 @@ app.post('/api/users',
 
                 }
 
-                // Create a new user
+                
                 user = new User({
                     name: name,
                     email: email,
@@ -45,14 +45,14 @@ app.post('/api/users',
 
                 });
 
-                // Encrypt the password
+                
                 const salt = await bcrypt.genSalt(10);
                 user.password = await bcrypt.hash(password, salt);
 
                 // Save to the db and return: mongoose function
                 await user.save();
 
-                // Generate and return a JWT token
+                
                 returnToken(user, res);
             } catch (error) {
                 res.status(500).send('Server error');
