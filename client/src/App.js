@@ -12,6 +12,7 @@ import EditPost from './components/Post/EditPost';
 
 class App extends React.Component {
   state = {
+
     posts: [],
     post: null,
     token: null,
@@ -27,6 +28,32 @@ class App extends React.Component {
 
     if (!token) {
       localStorage.removeItem('user');
+=======
+    data: null,
+    token: null,
+    user: null
+  }
+
+  componentDidMount() {
+    axios.get('http://localhost:5000')
+      .then((response) => {
+        this.setState({
+          data: response.data
+        })
+      })
+      .catch((error) => {
+        console.error(`Error fetching data: ${error}`);
+      })
+
+      this.authenticateUser();
+  }
+
+  authenticateUser = () => {
+    const token = localStorage.getItem('token');
+
+    if(!token) {
+      localStorage.removeItem('user')
+
       this.setState({ user: null });
     }
 
@@ -35,6 +62,7 @@ class App extends React.Component {
         headers: {
           'x-auth-token': token
         }
+
       };
       axios
         .get('http://localhost:5000/api/auth', config)
@@ -80,10 +108,26 @@ class App extends React.Component {
     }
   };
 
+      }
+      axios.get('http://localhost:5000/api/auth', config)
+        .then((response) => {
+          localStorage.setItem('user', response.data.name)
+          this.setState({ user: response.data.name })
+        })
+        .catch((error) => {
+          localStorage.removeItem('user');
+          this.setState({ user: null });
+          console.error(`Error logging in: ${error}`);
+        })
+    }
+  }
+
+
   logOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.setState({ user: null, token: null });
+
   };
 
   viewPost = post => {
@@ -149,6 +193,15 @@ class App extends React.Component {
       authenticateUser: this.authenticateUser
     };
 
+  }
+
+  render() {
+    let { user, data } = this.state;
+    const authProps = {
+      authenticateUser: this.authenticateUser
+    }
+
+
     return (
       <Router>
         <div className="App">
@@ -166,6 +219,7 @@ class App extends React.Component {
                 )}
               </li>
               <li>
+
                 {user ? (
                   <Link to="" onClick={this.logOut}>
                     Log out
@@ -173,10 +227,18 @@ class App extends React.Component {
                 ) : (
                   <Link to="/login">Log in</Link>
                 )}
+
+                {user ? 
+                  <Link to="" onClick={this.logOut}>Log out</Link> :
+                  <Link to="/login">Log in</Link> 
+                }
+                
+
               </li>
             </ul>
           </header>
           <main>
+
             <Switch>
               <Route exact path="/">
                 {user ? (
@@ -216,6 +278,26 @@ class App extends React.Component {
                 path="/login"
                 render={() => <Login {...authProps} />}
               />
+
+            <Route exact path="/">
+              {user ? 
+                <React.Fragment>
+                  <div>Hello {user}!</div>
+                  <div>{data}</div>
+                </React.Fragment> :
+                <React.Fragment>
+                  Please Register or Login
+                </React.Fragment>
+              }
+              
+            </Route>
+            <Switch>
+              <Route 
+                exact path="/register" 
+                render={() => <Register {...authProps} />} />
+              <Route 
+                exact path="/login" 
+                render={() => <Login {...authProps} />} />
             </Switch>
           </main>
         </div>
