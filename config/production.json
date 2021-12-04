@@ -1,0 +1,4 @@
+{
+    "mongoURI" : "mongodb+srv://TrezTheGreat:ZEzU0156!@cluster0.6b5lx.mongodb.net/Cluster0?retryWrites=true&w=majority",
+    "jwtSecret": "maytheforcebewithyou"
+}
