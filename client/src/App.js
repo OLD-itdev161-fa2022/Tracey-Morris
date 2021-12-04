@@ -21,6 +21,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.authenticateUser();
+
   }
 
   authenticateUser = () => {
@@ -28,7 +29,15 @@ class App extends React.Component {
 
     if (!token) {
       localStorage.removeItem('user');
-=======
+
+  }
+
+  authenticateUser = () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      localStorage.removeItem('user');
+
     data: null,
     token: null,
     user: null
@@ -53,6 +62,7 @@ class App extends React.Component {
 
     if(!token) {
       localStorage.removeItem('user')
+
 
       this.setState({ user: null });
     }
@@ -108,6 +118,7 @@ class App extends React.Component {
     }
   };
 
+
       }
       axios.get('http://localhost:5000/api/auth', config)
         .then((response) => {
@@ -121,6 +132,7 @@ class App extends React.Component {
         })
     }
   }
+
 
 
   logOut = () => {
@@ -193,6 +205,7 @@ class App extends React.Component {
       authenticateUser: this.authenticateUser
     };
 
+
   }
 
   render() {
@@ -228,16 +241,59 @@ class App extends React.Component {
                   <Link to="/login">Log in</Link>
                 )}
 
+
                 {user ? 
                   <Link to="" onClick={this.logOut}>Log out</Link> :
                   <Link to="/login">Log in</Link> 
                 }
                 
 
+
               </li>
             </ul>
           </header>
           <main>
+
+            <Switch>
+              <Route exact path="/">
+                {user ? (
+                  <React.Fragment>
+                    <div>Hello {user}!</div>
+                    <PostList
+                      posts={posts}
+                      clickPost={this.viewPost}
+                      deletePost={this.deletePost}
+                      editPost={this.editPost}
+                    />
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>Please Register or Login</React.Fragment>
+                )}
+              </Route>
+              <Route path="/posts/:postId">
+                <Post post={post} />
+              </Route>
+              <Route path="/new-post">
+                <CreatePost token={token} onPostCreated={this.onPostCreated} />
+              </Route>
+              <Route path="/edit-post/:postId">
+                <EditPost
+                  token={token}
+                  post={post}
+                  onPostUpdated={this.onPostUpdated}
+                />
+              </Route>
+              <Route
+                exact
+                path="/register"
+                render={() => <Register {...authProps} />}
+              />
+              <Route
+                exact
+                path="/login"
+                render={() => <Login {...authProps} />}
+              />
+
 
             <Switch>
               <Route exact path="/">
@@ -298,6 +354,7 @@ class App extends React.Component {
               <Route 
                 exact path="/login" 
                 render={() => <Login {...authProps} />} />
+
             </Switch>
           </main>
         </div>
